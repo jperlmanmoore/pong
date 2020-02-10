@@ -36,6 +36,16 @@ ball.goto(0, 0)
 ball.dx = .075
 ball.dy = -.075
 
+# pen
+pen = turtle.Turtle()
+pen.speed(0)
+pen.color("black")
+pen.penup()
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write("Player A: 0", "Player B: 0", align="center", font=("Courier", 24, "normal"))
+
+
 # Functions
 
 
@@ -66,16 +76,9 @@ def paddle_b_down():
 # Jeyboard binding
 wn.listen()  # listen for keyboard input
 wn.onkeypress(paddle_a_up, "w")
-
-wn.listen()  # listen for keyboard input
 wn.onkeypress(paddle_a_down, "s")
-
-wn.listen()  # listen for keyboard input
 wn.onkeypress(paddle_b_up, "Up")
-
-wn.listen()  # listen for keyboard input
 wn.onkeypress(paddle_b_down, "Down")
-
 
 # main game loop
 while True:
@@ -91,18 +94,23 @@ while True:
         ball.sety(290)
         ball.dy *= -1
 
-    if ball.ycor() < -290:
+    elif ball.ycor() < -290:
         ball.sety(-290)
         ball.dy *= -1
 
-    if ball.xcor() > 390:
+    if ball.xcor() > 350:
         ball.goto(0, 0)
         ball.dx *= -1
+        score_a += 1
 
-     if ball.xcor() < -390:
+    elif ball.xcor() < -350:
         ball.goto(0, 0)
         ball.dx *= -1
+        score_b += 1
 
 # Paddle and ball collision
-    if ball.xcor() > 340 and (ball.ycor() < paddle_b.ycor + 40 and ball.ycor() > paddle_b.ycor - 40)
+    if ball.xcor() > 340 and ball.ycor() < paddle_b.ycor() + 40 and ball.ycor() > paddle_b.ycor() - 40:
+        ball.dx *= -1
+
+    if ball.xcor() < -340 and ball.ycor() < paddle_a.ycor() + 40 and ball.ycor() > paddle_a.ycor() - 40:
         ball.dx *= -1
